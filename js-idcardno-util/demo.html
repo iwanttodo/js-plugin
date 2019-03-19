@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>身份证号校验与信息获取</title>
+    <script type="text/javascript" src="./idcardno-util.js"></script>
+    <script src="../js-district-util/district-util.js"></script>
+    <style>
+        th {
+            width: 400px;
+            height: 40px;
+        }
+        tr {
+            height: 35px;
+        }
+    </style>
+
+</head>
+
+<body>
+<table border="1" cellspacing="0" cellpadding="5" style="margin: 0 auto;">
+    <caption>身份证号校验与信息获取</caption>
+    <thead>
+        <th>条件</th>
+        <th>结果</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                身份证号：<input type="text" name="idcardno" id="idcardno" />
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="validateIdCardNo()">校验</button>
+            </td>
+            <td>
+                <label id="validateResult" style="font-weight: bold"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="getAddress()">获取地址</button>
+            </td>
+            <td>
+                <label id="address" style="font-weight: bold"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="getBirthday()">获取出生日期</button>
+            </td>
+            <td>
+                <label id="birthday" style="font-weight: bold"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="getSex()">获取性别</button>
+            </td>
+            <td>
+                <label id="sex" style="font-weight: bold"></label>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    // 验证身份证号码
+    function validateIdCardNo() {
+        var idcardno = document.querySelector("#idcardno").value;
+        var validateResult = IdCardNoUtil.validate(idcardno);
+        document.querySelector("#validateResult").innerText = (validateResult ? "真" : "假");
+    }
+
+    // 获取地址
+    function getAddress() {
+        var idcardno = document.querySelector("#idcardno").value;
+        var address = IdCardNoUtil.getAddress(idcardno);
+        document.querySelector("#address").innerText = address;
+    }
+    // 获取出生日期
+    function getBirthday() {
+        var idcardno = document.querySelector("#idcardno").value;
+        var birthday = IdCardNoUtil.getBirthday(idcardno, "-");
+        document.querySelector("#birthday").innerText = birthday;
+    }
+
+    // 获取性别
+    function getSex() {
+        var idcardno = document.querySelector("#idcardno").value;
+        var sex = IdCardNoUtil.getSex(idcardno, {0: "女", 1: "男"});
+        document.querySelector("#sex").innerText = sex;
+    }
+</script>
+</body>
+</html>

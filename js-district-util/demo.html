@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>行政区域编码查询</title>
+    <script type="text/javascript" src="./district-util.js"></script>
+    <style>
+        th {
+            width: 400px;
+            height: 40px;
+        }
+        tr {
+            height: 35px;
+        }
+    </style>
+</head>
+
+<body>
+<table border="1" cellspacing="0" cellpadding="5" style="margin: 0 auto;">
+    <caption>行政区域编码查询</caption>
+    <thead>
+        <th>条件</th>
+        <th>结果</th>
+        <th>查询</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                区域编码：<input type="text" name="code" id="code" />
+            </td>
+            <td>
+                省市区：<label id="area" style="font-weight: bold"></label>
+            </td>
+            <td>
+                <button onclick="selectAreaByCode()">查询</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;&nbsp;&nbsp;省市区：<input type="text" name="code" id="area2" />
+            </td>
+            <td>
+                区域编码：<label id="code2" style="font-weight: bold"></label>
+            </td>
+            <td>
+                <button onclick="selectCodeByArea()">查询</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;&nbsp;&nbsp;省市区：<input type="text" name="area" id="area3" />
+            </td>
+            <td>
+                区域编码：<input type="text" name="code" id="code3" />
+            </td>
+            <td>
+                <button onclick="selectChildren()">查询</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    // 根据编码查询省市区
+    function selectAreaByCode() {
+        var code = document.querySelector("#code").value;
+        if (!code) return ;
+        var area = DistrictUtil.getAddress(code);
+        document.querySelector("#area").innerText = area;
+    }
+    // 根据省市区查询区域编码
+    function selectCodeByArea() {
+        var area = document.querySelector("#area2").value;
+        if (!area) return ;
+        var code = DistrictUtil.getCode(area);
+        document.querySelector("#code2").innerText = code;
+    }
+
+    // 查询下级区域
+    function selectChildren() {
+        var area = document.querySelector("#area3").value;
+        var children = {};
+        if (!area) {
+            var code = document.querySelector("#code3").value;
+            children = DistrictUtil.getChildren(code);
+        } else {
+            children = DistrictUtil.getChildrenByArea(area);
+        }
+        alert("请查看控制台输出");
+        console.log(children);
+    }
+</script>
+</body>
+</html>
